@@ -1,0 +1,2 @@
+postgres on docker:
+docker run --name PostgresDb -e POSTGRES_PASSWORD={your password} -p 5432:5432 -d postgres
