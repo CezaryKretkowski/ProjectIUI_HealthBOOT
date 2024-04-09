@@ -15,6 +15,6 @@ public class TestController {
     }
     @RequestMapping("/GetText")
     public AudiToTextResponse GenerateText(){
-        return audioToTextServices.GenerateTextFromMp3("resource/testaudi.mp3");
+        return audioToTextServices.generateTextFromWma("src/main/resources/Records/Test/TestRecord.wav");
     }
 }
