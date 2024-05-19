@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -20,7 +22,7 @@ public class AudiToTextService implements IAudioToTextServices {
     @Value( "${Speech.Language}" )
     private String speechLanguage;
 
-    private AudiToTextResponse recognizeGetText(SpeechConfig speechConfig,String path) throws ExecutionException, InterruptedException {
+    private List<AudiToTextResponse> recognizeGetText(SpeechConfig speechConfig, String path) throws ExecutionException, InterruptedException {
         String result ="";
 
         AudioConfig audioConfig = AudioConfig.fromWavFileInput(path);
@@ -30,7 +32,10 @@ public class AudiToTextService implements IAudioToTextServices {
 
         if (speechRecognitionResult.getReason() == ResultReason.RecognizedSpeech) {
             result = speechRecognitionResult.getText();
-            return new AudiToTextResponse(UUID.randomUUID(),result,"Ok");
+            var first = new AudiToTextResponse(UUID.randomUUID(),result,"Ok","00022308912","Iwona","Jakas");
+            var list = new ArrayList<AudiToTextResponse>();
+            list.add(first);
+            return list;
         }
         else  {
             result = "Failed to convert audio to text";
@@ -40,7 +45,7 @@ public class AudiToTextService implements IAudioToTextServices {
     }
 
     @Override
-    public AudiToTextResponse generateTextFromWma(String path) throws RuntimeException{
+    public List<AudiToTextResponse> generateTextFromWma(String path) throws RuntimeException{
         try {
             System.out.println(speechKey + " " + speechRegion);
             SpeechConfig speechConfig = SpeechConfig.fromSubscription(speechKey, speechRegion);

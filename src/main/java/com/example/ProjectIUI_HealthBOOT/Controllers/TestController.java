@@ -13,8 +13,8 @@ public class TestController {
     public TestController(IAudioToTextServices audioToTextServices){
         this.audioToTextServices = audioToTextServices;
     }
-    @RequestMapping("/GetText")
-    public AudiToTextResponse GenerateText(){
-        return audioToTextServices.generateTextFromWma("src/main/resources/Records/Test/TestRecord.wav");
-    }
+//    @RequestMapping("/GetText")
+//    public AudiToTextResponse GenerateText(){
+//        return audioToTextServices.generateTextFromWma("src/main/resources/Records/Test/TestRecord.wav");
+//    }
 }
