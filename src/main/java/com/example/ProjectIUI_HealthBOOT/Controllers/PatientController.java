@@ -1,10 +1,12 @@
 package com.example.ProjectIUI_HealthBOOT.Controllers;
 
+import com.example.ProjectIUI_HealthBOOT.Dtos.PatientResponse;
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.Patient;
 import com.example.ProjectIUI_HealthBOOT.Services.Patient.PatientService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,29 +16,44 @@ public class PatientController {
 
     private final PatientService patientService;
 
-    @Autowired
     public PatientController(PatientService patientService) {
         this.patientService = patientService;
     }
 
     @GetMapping("/all")
-    public List<Patient> getAllPatients() {
-        return patientService.getAllPatients();
+    public PatientResponse getAllPatients() {
+        List<Patient> patientList = patientService.getAllPatients();
+        /*for(Patient p:patientList){
+            p.setUuid(null);
+        }*/
+        return new PatientResponse("ok",patientList);
     }
 
     @GetMapping("/{id}")
-    public Patient getPatientById(@PathVariable UUID id) {
-        return patientService.getPatientById(id);
+    public PatientResponse getPatientById(@PathVariable UUID id) {
+        Patient patient=patientService.getPatientById(id);
+       // patient.setUuid(null);
+        List<Patient> patientList= new ArrayList<>();
+        patientList.add(patient);
+        return new PatientResponse("ok",patientList);
     }
 
     @PostMapping("/add")
-    public Patient addPatient(@RequestBody Patient patient) {
-        return patientService.addPatient(patient);
+    public PatientResponse addPatient(@RequestBody Patient patient) {
+        Patient newPatient=patientService.addPatient(patient);
+        //newPatient.setUuid(null);
+        List<Patient> patientList= new ArrayList<>();
+        patientList.add(patient);
+        return new PatientResponse("ok",patientList);
     }
 
     @PutMapping("/update/{id}")
-    public Patient updatePatient(@PathVariable UUID id, @RequestBody Patient patient) {
-        return patientService.updatePatient(id, patient);
+    public PatientResponse updatePatient(@PathVariable UUID id, @RequestBody Patient patient) {
+        Patient newPatient=patientService.updatePatient(id, patient);
+        //newPatient.setUuid(null);
+        List<Patient> patientList= new ArrayList<>();
+        patientList.add(patient);
+        return new PatientResponse("ok",patientList);
     }
 
     @DeleteMapping("/del/{id}")

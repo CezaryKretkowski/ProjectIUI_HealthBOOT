@@ -13,6 +13,16 @@ public class AudioFile {
 
     @Column(nullable = false, unique = true)
     private String fileName;
+    @Column(nullable = false, unique = true)
+    private String DoktorID;
+
+    public String getDoktorID() {
+        return DoktorID;
+    }
+
+    public void setDoktorID(String doktorID) {
+        DoktorID = doktorID;
+    }
 
     // Getters and Setters
     public UUID getUuid() {

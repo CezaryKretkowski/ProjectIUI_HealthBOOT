@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PatientService {
+public class PatientService {//todo poprawić do frontendu nie przesyłać uuid
 
     private final PatientRepository patientRepository;
 
