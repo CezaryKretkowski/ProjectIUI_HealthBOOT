@@ -22,6 +22,13 @@ public class AudiToTextService implements IAudioToTextServices {
     @Value( "${Speech.Language}" )
     private String speechLanguage;
 
+
+    private final  ITextRecognitionService recognitionService;
+
+    public AudiToTextService(ITextRecognitionService recognitionService) {
+        this.recognitionService = recognitionService;
+    }
+
     private List<AudiToTextResponse> recognizeGetText(SpeechConfig speechConfig, String path) throws ExecutionException, InterruptedException {
         String result ="";
 
@@ -32,9 +39,12 @@ public class AudiToTextService implements IAudioToTextServices {
 
         if (speechRecognitionResult.getReason() == ResultReason.RecognizedSpeech) {
             result = speechRecognitionResult.getText();
-            var first = new AudiToTextResponse(UUID.randomUUID(),result,"Ok","00022308912","Iwona","Jakas");
-            var list = new ArrayList<AudiToTextResponse>();
-            list.add(first);
+            var list = recognitionService.GetDataFromTranscription(result);
+            if(list.isEmpty()) {
+                var first = new AudiToTextResponse(UUID.randomUUID(), result, "Failed to get data", "", "", "");
+                list = new ArrayList<AudiToTextResponse>();
+                list.add(first);
+            }
             return list;
         }
         else  {
@@ -56,4 +66,5 @@ public class AudiToTextService implements IAudioToTextServices {
             throw new RuntimeException(e);
         }
     }
+
 }
