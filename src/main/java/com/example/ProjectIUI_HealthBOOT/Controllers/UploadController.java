@@ -1,13 +1,18 @@
 package com.example.ProjectIUI_HealthBOOT.Controllers;
-
+import com.example.ProjectIUI_HealthBOOT.Dtos.AudiToTextResponse;
 import com.example.ProjectIUI_HealthBOOT.Dtos.UploadResponse;
 import com.example.ProjectIUI_HealthBOOT.Entity.AudioFile.AudioFile;
 import com.example.ProjectIUI_HealthBOOT.Services.Audio.AudioFileService;
+
 import com.example.ProjectIUI_HealthBOOT.Services.UploadService.IUploadService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
@@ -16,15 +21,18 @@ import java.util.UUID;
 @RequestMapping("/upload")
 public class UploadController {
     private final IUploadService uploadService;
-    @Autowired
-    public UploadController(IUploadService uploadService, AudioFileService audioFileService) {
+
+    private final IAudioToTextServices audioToTextServices;
+
+    public UploadController(IUploadService uploadService, IAudioToTextServices audioToTextServices) {
         this.uploadService = uploadService;
-        this.audioFileService = audioFileService;
+        this.audioToTextServices = audioToTextServices;
     }
 
     @PostMapping("/audio")
-    public UploadResponse uploadFile(@RequestParam("file") MultipartFile file) {
-        return uploadService.saveFile(file,null);
+    public List<AudiToTextResponse> uploadFile(@RequestParam("file") MultipartFile file) {
+        var response = uploadService.saveFile(file, UUID.randomUUID().toString());
+        return audioToTextServices.generateTextFromWma(response.text());
     }
 
     private final AudioFileService audioFileService;
