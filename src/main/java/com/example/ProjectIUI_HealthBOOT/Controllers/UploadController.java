@@ -2,6 +2,7 @@ package com.example.ProjectIUI_HealthBOOT.Controllers;
 import com.example.ProjectIUI_HealthBOOT.Dtos.AudiToTextResponse;
 import com.example.ProjectIUI_HealthBOOT.Dtos.UploadResponse;
 import com.example.ProjectIUI_HealthBOOT.Entity.AudioFile.AudioFile;
+import com.example.ProjectIUI_HealthBOOT.Services.AudiToTextService.IAudioToTextServices;
 import com.example.ProjectIUI_HealthBOOT.Services.Audio.AudioFileService;
 
 import com.example.ProjectIUI_HealthBOOT.Services.UploadService.IUploadService;
@@ -24,9 +25,10 @@ public class UploadController {
 
     private final IAudioToTextServices audioToTextServices;
 
-    public UploadController(IUploadService uploadService, IAudioToTextServices audioToTextServices) {
+    public UploadController(IUploadService uploadService, IAudioToTextServices audioToTextServices, AudioFileService audioFileService) {
         this.uploadService = uploadService;
         this.audioToTextServices = audioToTextServices;
+        this.audioFileService = audioFileService;
     }
 
     @PostMapping("/audio")
