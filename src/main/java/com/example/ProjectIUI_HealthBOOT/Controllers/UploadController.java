@@ -1,15 +1,12 @@
 package com.example.ProjectIUI_HealthBOOT.Controllers;
-
 import com.example.ProjectIUI_HealthBOOT.Dtos.AudiToTextResponse;
 import com.example.ProjectIUI_HealthBOOT.Dtos.UploadResponse;
-import com.example.ProjectIUI_HealthBOOT.Services.AudiToTextService.IAudioToTextServices;
+import com.example.ProjectIUI_HealthBOOT.Entity.AudioFile.AudioFile;
+import com.example.ProjectIUI_HealthBOOT.Services.Audio.AudioFileService;
+
 import com.example.ProjectIUI_HealthBOOT.Services.UploadService.IUploadService;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -24,6 +21,7 @@ import java.util.UUID;
 @RequestMapping("/upload")
 public class UploadController {
     private final IUploadService uploadService;
+
     private final IAudioToTextServices audioToTextServices;
 
     public UploadController(IUploadService uploadService, IAudioToTextServices audioToTextServices) {
@@ -35,5 +33,34 @@ public class UploadController {
     public List<AudiToTextResponse> uploadFile(@RequestParam("file") MultipartFile file) {
         var response = uploadService.saveFile(file, UUID.randomUUID().toString());
         return audioToTextServices.generateTextFromWma(response.text());
+    }
+
+    private final AudioFileService audioFileService;
+
+
+
+    @GetMapping
+    public List<AudioFile> getAllAudioFiles() {
+        return audioFileService.getAllAudioFiles();
+    }
+
+    @GetMapping("/{id}")
+    public AudioFile getAudioFileById(@PathVariable UUID id) {
+        return audioFileService.getAudioFileById(id);
+    }
+
+    @PostMapping
+    public AudioFile addAudioFile(@RequestBody AudioFile audioFile) {
+        return audioFileService.addAudioFile(audioFile);
+    }
+
+    @PutMapping("/{id}")
+    public AudioFile updateAudioFile(@PathVariable UUID id, @RequestBody AudioFile audioFile) {
+        return audioFileService.updateAudioFile(id, audioFile);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteAudioFile(@PathVariable UUID id) {
+        audioFileService.deleteAudioFile(id);
     }
 }
