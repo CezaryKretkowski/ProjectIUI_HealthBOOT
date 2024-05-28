@@ -31,11 +31,11 @@ public class UploadController {
         this.audioFileService = audioFileService;
     }
 
-    @PostMapping("/audio")
+    /*@PostMapping("/audio")
     public List<AudiToTextResponse> uploadFile(@RequestParam("file") MultipartFile file) {
         var response = uploadService.saveFile(file, UUID.randomUUID().toString());
         return audioToTextServices.generateTextFromWma(response.text());
-    }
+    }*/
 
     private final AudioFileService audioFileService;
 
@@ -51,9 +51,10 @@ public class UploadController {
         return audioFileService.getAudioFileById(id);
     }
 
-    @PostMapping
-    public AudioFile addAudioFile(@RequestBody AudioFile audioFile) {
-        return audioFileService.addAudioFile(audioFile);
+    @PostMapping("/audio")
+    public List<AudiToTextResponse> addAudioFile(@RequestParam("file") MultipartFile file) {
+        var response = audioFileService.addAudioFile((AudioFile) file);
+        return audioToTextServices.generateTextFromWma("src/main/resources/Records/"+response.text());
     }
 
     @PutMapping("/{id}")
