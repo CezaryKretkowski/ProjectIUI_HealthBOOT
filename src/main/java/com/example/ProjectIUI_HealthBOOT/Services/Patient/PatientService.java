@@ -2,8 +2,10 @@ package com.example.ProjectIUI_HealthBOOT.Services.Patient;
 
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.Patient;
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.PatientRepository;
+import org.apache.coyote.BadRequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,8 +31,12 @@ public class PatientService {
         return patientRepository.findByPesel(pesel).orElse(null);
     }
 
-    public Patient addPatient(Patient patient) {
-        return patientRepository.save(patient);
+    public Patient addPatient(Patient patient) throws Exception {
+        try {
+            return patientRepository.save(patient);
+        }catch (Exception e){
+            throw new Exception(e.getMessage());
+        }
     }
 
     public Patient updatePatient(UUID id, Patient updatedPatient) {

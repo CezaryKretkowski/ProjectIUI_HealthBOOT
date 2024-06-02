@@ -4,6 +4,7 @@ import com.example.ProjectIUI_HealthBOOT.Dtos.PatientCreateRequest;
 import com.example.ProjectIUI_HealthBOOT.Dtos.PatientResponse;
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.Patient;
 import com.example.ProjectIUI_HealthBOOT.Services.Patient.PatientService;
+import org.apache.coyote.BadRequestException;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -42,13 +43,16 @@ public class PatientController {
     }
 
     @PostMapping("/add")
-    public PatientResponse addPatient(@RequestBody PatientCreateRequest patientCreateRequest) {
+    public PatientResponse addPatient(@RequestBody PatientCreateRequest patientCreateRequest) throws BadRequestException {
         Patient patient = new Patient(patientCreateRequest);
-
-        Patient newPatient=patientService.addPatient(patient);
-        List<Patient> patientList= new ArrayList<>();
-        patientList.add(patient);
-        return new PatientResponse("ok",patientList);
+        try {
+            Patient newPatient = patientService.addPatient(patient);
+            List<Patient> patientList= new ArrayList<>();
+            patientList.add(patient);
+            return new PatientResponse("ok",patientList);
+        }catch (Exception e){
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     @PutMapping("/update/{id}")
