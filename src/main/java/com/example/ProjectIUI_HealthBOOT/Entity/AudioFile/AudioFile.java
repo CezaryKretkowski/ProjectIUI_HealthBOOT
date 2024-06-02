@@ -13,7 +13,7 @@ public class AudioFile {
 
     @Column(nullable = false, unique = true)
     private String fileName;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = true, unique = true)
     private String DoktorID;
 
     public String getDoktorID() {

@@ -1,5 +1,6 @@
 package com.example.ProjectIUI_HealthBOOT.Controllers;
 
+import com.example.ProjectIUI_HealthBOOT.Dtos.PatientCreateRequest;
 import com.example.ProjectIUI_HealthBOOT.Dtos.PatientResponse;
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.Patient;
 import com.example.ProjectIUI_HealthBOOT.Services.Patient.PatientService;
@@ -23,16 +24,12 @@ public class PatientController {
     @GetMapping("/all")
     public PatientResponse getAllPatients() {
         List<Patient> patientList = patientService.getAllPatients();
-        /*for(Patient p:patientList){
-            p.setUuid(null);
-        }*/
         return new PatientResponse("ok",patientList);
     }
 
     @GetMapping("/{id}")
     public PatientResponse getPatientById(@PathVariable UUID id) {
         Patient patient=patientService.getPatientById(id);
-       // patient.setUuid(null);
         List<Patient> patientList= new ArrayList<>();
         patientList.add(patient);
         return new PatientResponse("ok",patientList);
@@ -45,9 +42,10 @@ public class PatientController {
     }
 
     @PostMapping("/add")
-    public PatientResponse addPatient(@RequestBody Patient patient) {
+    public PatientResponse addPatient(@RequestBody PatientCreateRequest patientCreateRequest) {
+        Patient patient = new Patient(patientCreateRequest);
+
         Patient newPatient=patientService.addPatient(patient);
-        //newPatient.setUuid(null);
         List<Patient> patientList= new ArrayList<>();
         patientList.add(patient);
         return new PatientResponse("ok",patientList);
@@ -56,7 +54,6 @@ public class PatientController {
     @PutMapping("/update/{id}")
     public PatientResponse updatePatient(@PathVariable UUID id, @RequestBody Patient patient) {
         Patient newPatient=patientService.updatePatient(id, patient);
-        //newPatient.setUuid(null);
         List<Patient> patientList= new ArrayList<>();
         patientList.add(patient);
         return new PatientResponse("ok",patientList);

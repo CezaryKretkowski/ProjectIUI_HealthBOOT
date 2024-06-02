@@ -1,10 +1,23 @@
 package com.example.ProjectIUI_HealthBOOT.Entity.Patient;
 
+import com.example.ProjectIUI_HealthBOOT.Dtos.PatientCreateRequest;
 import jakarta.persistence.*;
 import java.util.UUID;
 
 @Entity
 public class Patient {
+    public Patient(){}
+    public Patient(PatientCreateRequest request) {
+        this.firstName = request.firstName();
+        this.lastName = request.lastName();
+        this.pesel = request.pesel();
+    }
+
+    public Patient(String firstName, String lastName, String pesel) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.pesel = pesel;
+    }
 
     @Id
     @GeneratedValue

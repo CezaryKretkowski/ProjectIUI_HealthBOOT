@@ -47,14 +47,26 @@ public class PatientRecordService {
         patientRecordRepository.deleteById(id);
     }
 
-    public PatientRecord addPatientRecord(PatientRecordRequest request) {
+    public PatientRecord AddPatientRecord(PatientRecordRequest request) {
         PatientRecord  record = new PatientRecord();
         record.setUuid(UUID.randomUUID());
-        Optional<Patient> patient = patientRepository.findById(request.getPatientId());
-        if(patient.isPresent())
-            record.setPatient(patient.get());
-        else
-            throw new RuntimeException("Patient not found");
+        if(request.getPatientId()!=null){
+            Optional<Patient> patient = patientRepository.findById(request.getPatientId());
+            if(patient.isPresent()) {
+                record.setPatient(patient.get());
+            }else{
+                Patient p = new Patient(request.getFirstName(),request.getLastName(),request.getPesel());
+                p = patientRepository.save(p);
+                record.setPatient(p);
+            }
+        }else {
+            Patient p = new Patient(request.getFirstName(),request.getLastName(),request.getPesel());
+            p = patientRepository.save(p);
+            record.setPatient(p);
+        }
+
+
+
         record.setPatientStatus(request.getState());
         return patientRecordRepository.save(record);
     }

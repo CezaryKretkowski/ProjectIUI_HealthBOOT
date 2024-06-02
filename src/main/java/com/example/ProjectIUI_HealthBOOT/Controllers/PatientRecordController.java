@@ -25,8 +25,6 @@ public class PatientRecordController {
     @GetMapping("/all")
     public PatientRecordResponse getAllPatientRecords() {
         List<PatientRecord> patientRecordList=patientRecordService.getAllPatientRecords();
-
-
         return new PatientRecordResponse("ok",patientRecordList);
     }
 
@@ -46,8 +44,7 @@ public class PatientRecordController {
 
     @PostMapping("/record/add")
     public PatientRecordResponse addPatientRecordByPatientID(@RequestBody PatientRecordRequest request) {
-        patientRecordService.addPatientRecord(request);
-
+        patientRecordService.AddPatientRecord(request);
         return new PatientRecordResponse("ok",new ArrayList<PatientRecord>());
     }
 

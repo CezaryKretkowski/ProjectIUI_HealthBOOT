@@ -31,7 +31,7 @@ public class UploadController {
         this.audioFileService = audioFileService;
     }
 
-    @PostMapping("/audio")
+    //@PostMapping("/audio")
     public List<AudiToTextResponse> uploadFile(@RequestParam("file") MultipartFile file) {
         var response = uploadService.saveFile(file, UUID.randomUUID().toString());
         return audioToTextServices.generateTextFromWma(response.text());
@@ -51,7 +51,7 @@ public class UploadController {
         return audioFileService.getAudioFileById(id);
     }
 
-    //@PostMapping("/audio")
+    @PostMapping("/audio")
     public List<AudiToTextResponse> addAudioFile(@RequestParam("file") MultipartFile file) {
         var response = audioFileService.addAudioFile(file);
         return audioToTextServices.generateTextFromWma(response.text());
