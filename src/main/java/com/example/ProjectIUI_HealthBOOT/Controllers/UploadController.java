@@ -6,9 +6,7 @@ import com.example.ProjectIUI_HealthBOOT.Services.AudiToTextService.IAudioToText
 import com.example.ProjectIUI_HealthBOOT.Services.Audio.AudioFileService;
 
 import com.example.ProjectIUI_HealthBOOT.Services.UploadService.IUploadService;
-import jdk.jfr.ContentType;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -33,8 +31,8 @@ public class UploadController {
         this.audioFileService = audioFileService;
     }
 
-    @PostMapping(value = "/audio" ,consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<AudiToTextResponse> uploadFile(@RequestPart("file") MultipartFile file) {
+    @PostMapping("/audio")
+    public List<AudiToTextResponse> uploadFile(@RequestParam("file") MultipartFile file) {
         var response = uploadService.saveFile(file, UUID.randomUUID().toString());
         return audioToTextServices.generateTextFromWma(response.text());
     }
