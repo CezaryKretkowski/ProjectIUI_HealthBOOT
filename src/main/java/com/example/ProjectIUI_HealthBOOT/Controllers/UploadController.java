@@ -51,9 +51,10 @@ public class UploadController {
         return audioFileService.getAudioFileById(id);
     }
 
-    @PostMapping
-    public AudioFile addAudioFile(@RequestBody AudioFile audioFile) {
-        return audioFileService.addAudioFile(audioFile);
+    //@PostMapping("/audio")
+    public List<AudiToTextResponse> addAudioFile(@RequestParam("file") MultipartFile file) {
+        var response = audioFileService.addAudioFile(file);
+        return audioToTextServices.generateTextFromWma(response.text());
     }
 
     @PutMapping("/{id}")

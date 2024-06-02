@@ -6,7 +6,6 @@ import com.example.ProjectIUI_HealthBOOT.Services.HealthBotService.IHealthBotSer
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/HealthBot")
 public class HealthBotController {
 
     private final IHealthBotService healthBotService;

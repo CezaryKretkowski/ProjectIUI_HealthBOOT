@@ -1,5 +1,6 @@
 package com.example.ProjectIUI_HealthBOOT.Controllers;
 
+import com.example.ProjectIUI_HealthBOOT.Dtos.PatientRecordRequest;
 import com.example.ProjectIUI_HealthBOOT.Dtos.PatientRecordResponse;
 import com.example.ProjectIUI_HealthBOOT.Entity.PatientRecord.PatientRecord;
 import com.example.ProjectIUI_HealthBOOT.Services.Patient.PatientRecordService;
@@ -41,6 +42,13 @@ public class PatientRecordController {
         List<PatientRecord> patientRecordList=new ArrayList<>();
         patientRecordList.add(patientRecordService.addPatientRecord(patientRecord));
         return new PatientRecordResponse("ok",patientRecordList);
+    }
+
+    @PostMapping("/record/add")
+    public PatientRecordResponse addPatientRecordByPatientID(@RequestBody PatientRecordRequest request) {
+        patientRecordService.addPatientRecord(request);
+
+        return new PatientRecordResponse("ok",new ArrayList<PatientRecord>());
     }
 
     @PutMapping("/update/{id}")
