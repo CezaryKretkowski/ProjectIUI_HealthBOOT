@@ -38,6 +38,12 @@ public class PatientController {
         return new PatientResponse("ok",patientList);
     }
 
+    @GetMapping("/{pesel}")
+    public PatientResponse getPatientByPesel(@PathVariable String pesel) {
+        Patient patient = patientService.getPatientByPesel(pesel);
+        return new PatientResponse("ok", (List<Patient>) patient);
+    }
+
     @PostMapping("/add")
     public PatientResponse addPatient(@RequestBody Patient patient) {
         Patient newPatient=patientService.addPatient(patient);

@@ -53,8 +53,8 @@ public class AudioFileService {
             // Zapis przesłanego pliku
             String fileName=new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
             a.setFileName(fileName);
-            Path filePath = uploadPath.resolve(fileName+".wav");//todo format audio powinien nadawać się automatycznie
-            Files.copy(audioFile.getInputStream(), filePath);//todo jak będzie id lekarza to tutaj dodać
+            Path filePath = uploadPath.resolve(fileName+".wav");
+            Files.copy(audioFile.getInputStream(), filePath);
 
             audioFileRepository.save(a);
 

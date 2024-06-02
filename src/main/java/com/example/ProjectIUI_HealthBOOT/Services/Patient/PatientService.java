@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
-public class PatientService {//todo poprawić do frontendu nie przesyłać uuid
+public class PatientService {
 
     private final PatientRepository patientRepository;
 
@@ -24,6 +24,9 @@ public class PatientService {//todo poprawić do frontendu nie przesyłać uuid
 
     public Patient getPatientById(UUID id) {
         return patientRepository.findById(id).orElse(null);
+    }
+    public Patient getPatientByPesel(String pesel) {
+        return patientRepository.findByPesel(pesel).orElse(null);
     }
 
     public Patient addPatient(Patient patient) {
