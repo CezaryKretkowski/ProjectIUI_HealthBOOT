@@ -1,21 +1,27 @@
 package com.example.ProjectIUI_HealthBOOT.Services.Patient;
 
+import com.example.ProjectIUI_HealthBOOT.Dtos.PatientRecordRequest;
+import com.example.ProjectIUI_HealthBOOT.Entity.Patient.Patient;
+import com.example.ProjectIUI_HealthBOOT.Entity.Patient.PatientRepository;
 import com.example.ProjectIUI_HealthBOOT.Entity.PatientRecord.PatientRecord;
 import com.example.ProjectIUI_HealthBOOT.Entity.PatientRecord.PatientRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
 public class PatientRecordService {
 
     private final PatientRecordRepository patientRecordRepository;
+    private final PatientRepository patientRepository;
 
     @Autowired
-    public PatientRecordService(PatientRecordRepository patientRecordRepository) {
+    public PatientRecordService(PatientRecordRepository patientRecordRepository, PatientRepository patientRepository) {
         this.patientRecordRepository = patientRecordRepository;
+        this.patientRepository = patientRepository;
     }
 
     public List<PatientRecord> getAllPatientRecords() {
@@ -40,4 +46,17 @@ public class PatientRecordService {
     public void deletePatientRecord(UUID id) {
         patientRecordRepository.deleteById(id);
     }
+
+    public PatientRecord addPatientRecord(PatientRecordRequest request) {
+        PatientRecord  record = new PatientRecord();
+        record.setUuid(UUID.randomUUID());
+        Optional<Patient> patient = patientRepository.findById(request.getPatientId());
+        if(patient.isPresent())
+            record.setPatient(patient.get());
+        else
+            throw new RuntimeException("Patient not found");
+        record.setPatientStatus(request.getState());
+        return patientRecordRepository.save(record);
+    }
+
 }
