@@ -5,7 +5,9 @@ import com.example.ProjectIUI_HealthBOOT.Dtos.PatientResponse;
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.Patient;
 import com.example.ProjectIUI_HealthBOOT.Services.Patient.PatientService;
 import org.apache.coyote.BadRequestException;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -51,7 +53,7 @@ public class PatientController {
             patientList.add(patient);
             return new PatientResponse("ok",patientList);
         }catch (Exception e){
-            throw new BadRequestException(e.getMessage());
+            throw new ResponseStatusException( 409, "Sql Exception", e);
         }
     }
 

@@ -31,12 +31,8 @@ public class PatientService {
         return patientRepository.findByPesel(pesel).orElse(null);
     }
 
-    public Patient addPatient(Patient patient) throws Exception {
-        try {
-            return patientRepository.save(patient);
-        }catch (Exception e){
-            throw new Exception(e.getMessage());
-        }
+    public Patient addPatient(Patient patient) {
+        return patientRepository.save(patient);
     }
 
     public Patient updatePatient(UUID id, Patient updatedPatient) {
