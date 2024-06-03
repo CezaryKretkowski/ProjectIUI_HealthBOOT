@@ -35,14 +35,14 @@ public class PatientRecordController {
         return new PatientRecordResponse("ok",patientRecordList);
     }
 
-    @PostMapping("/add")
+    //@PostMapping("/add")
     public PatientRecordResponse addPatientRecord(@RequestBody PatientRecord patientRecord) {
         List<PatientRecord> patientRecordList=new ArrayList<>();
         patientRecordList.add(patientRecordService.addPatientRecord(patientRecord));
         return new PatientRecordResponse("ok",patientRecordList);
     }
 
-    @PostMapping("/record/add")
+    @PostMapping("/add")
     public PatientRecordResponse addPatientRecordByPatientID(@RequestBody PatientRecordRequest request) {
         patientRecordService.AddPatientRecord(request);
         return new PatientRecordResponse("ok",new ArrayList<PatientRecord>());
