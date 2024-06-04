@@ -1,7 +1,9 @@
 package com.example.ProjectIUI_HealthBOOT.Entity.PatientRecord;
 
+import com.example.ProjectIUI_HealthBOOT.Entity.AudioFile.AudioFile;
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.Patient;
 import jakarta.persistence.*;
+import jdk.jfr.Timestamp;
 
 import java.util.UUID;
 
@@ -18,6 +20,16 @@ public class PatientRecord {
 
     @Column(nullable = false)
     private String patientStatus;
+
+    @ManyToOne
+    @JoinColumn(name="audio_uuid")
+    private AudioFile audioFile;
+
+    @Column(nullable = false)
+    private String roundDate;
+
+    @Column(nullable = false)
+    private String roundTime;
 
     // Getters and Setters
     public UUID getUuid() {
@@ -42,5 +54,29 @@ public class PatientRecord {
 
     public void setPatientStatus(String patientStatus) {
         this.patientStatus = patientStatus;
+    }
+
+    public AudioFile getAudioFile() {
+        return audioFile;
+    }
+
+    public void setAudioFile(AudioFile audioFile) {
+        this.audioFile = audioFile;
+    }
+
+    public String getRoundDate() {
+        return roundDate;
+    }
+
+    public void setRoundDate(String roundDate) {
+        this.roundDate = roundDate;
+    }
+
+    public String getRoundTime() {
+        return roundTime;
+    }
+
+    public void setRoundTime(String roundTime) {
+        this.roundTime = roundTime;
     }
 }
