@@ -1,5 +1,8 @@
 package com.example.ProjectIUI_HealthBOOT.Dtos;
 
+import com.example.ProjectIUI_HealthBOOT.Entity.AudioFile.AudioFile;
+import jakarta.persistence.Column;
+
 import java.util.UUID;
 
 public class PatientRecordRequest {
@@ -48,5 +51,33 @@ public class PatientRecordRequest {
 
     public void setState(String state) {
         this.state = state;
+    }
+
+    private String roundDate;
+    private String roundTime;
+    private AudioFile audioFile;
+
+    public String getRoundDate() {
+        return roundDate;
+    }
+
+    public void setRoundDate(String roundDate) {
+        this.roundDate = roundDate;
+    }
+
+    public String getRoundTime() {
+        return roundTime;
+    }
+
+    public void setRoundTime(String roundTime) {
+        this.roundTime = roundTime;
+    }
+
+    public AudioFile getAudioFile() {
+        return audioFile;
+    }
+
+    public void setAudioFile(AudioFile audioFile) {
+        this.audioFile = audioFile;
     }
 }

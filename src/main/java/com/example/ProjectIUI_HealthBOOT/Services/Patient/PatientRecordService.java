@@ -68,6 +68,9 @@ public class PatientRecordService {
 
 
         record.setPatientStatus(request.getState());
+        record.setRoundDate(request.getRoundDate());
+        record.setRoundTime(request.getRoundTime());
+        record.setAudioFile(request.getAudioFile());
         return patientRecordRepository.save(record);
     }
 
