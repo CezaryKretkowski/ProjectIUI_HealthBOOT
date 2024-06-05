@@ -34,12 +34,10 @@ public class PatientRecordController {
         patientRecordList.add(patientRecordService.getPatientRecordById(id));
         return new PatientRecordResponse("ok",patientRecordList);
     }
-//    @GetMapping("/patient/{id}")
-//    public PatientRecordResponse getPatientRecordByPatientId(@PathVariable UUID id) {
-//        List<PatientRecord> patientRecordList=new ArrayList<>();
-//        //patientRecordList.add(patientRecordService.getPatientRecordByPatientId(id));
-//        return new PatientRecordResponse("ok",patientRecordList);
-//    }
+    @GetMapping("/patient/{id}")
+    public PatientRecordResponse getPatientRecordByPatientId(@PathVariable UUID id) {
+        return new PatientRecordResponse("ok",patientRecordService.getPatientRecordByPatientId(id));
+    }
 
     //@PostMapping("/add")
     public PatientRecordResponse addPatientRecord(@RequestBody PatientRecord patientRecord) {
