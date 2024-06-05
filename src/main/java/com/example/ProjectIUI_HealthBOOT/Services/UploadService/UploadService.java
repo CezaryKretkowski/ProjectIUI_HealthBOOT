@@ -26,7 +26,7 @@ public class UploadService implements IUploadService {
 
     @Override
     public UploadResponse saveFile(MultipartFile audio, String IDLEKARZA) {
-        IDLEKARZA="ADMIN";//todo IDLEKARZA będzie przekazywane z frontendu
+
         if (audio.isEmpty()) {
             return new UploadResponse(UUID.randomUUID(),"Plik nie został przesłąny",HttpStatus.BAD_REQUEST.toString());
         }
@@ -40,14 +40,14 @@ public class UploadService implements IUploadService {
 
             // Zapis przesłanego pliku
             String fileName=new SimpleDateFormat("yyyyMMdd_HHmmss").format(Calendar.getInstance().getTime());
-            Path filePath = uploadPath.resolve(fileName+".wav");//todo format audio powinien nadawać się automatycznie
+            Path filePath = uploadPath.resolve(fileName+".wav");
             Files.copy(audio.getInputStream(), filePath);
 
             helper.initializeTable();
 
             helper.insertData(IDLEKARZA.toString(),fileName);
 
-            return new UploadResponse(UUID.randomUUID(),"Plik został pomyślnie przesłany i zapisany.",HttpStatus.OK.toString());
+            return new UploadResponse(UUID.randomUUID(),filePath.toString(),HttpStatus.OK.toString());
         } catch (IOException e) {
             return new UploadResponse(UUID.randomUUID(),"Wystąpił błąd podczas zapisu pliku.",HttpStatus.INTERNAL_SERVER_ERROR.toString());
         }

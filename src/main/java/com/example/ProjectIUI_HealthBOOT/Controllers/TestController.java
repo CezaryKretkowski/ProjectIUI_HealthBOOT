@@ -2,7 +2,6 @@ package com.example.ProjectIUI_HealthBOOT.Controllers;
 
 import com.example.ProjectIUI_HealthBOOT.Dtos.AudiToTextResponse;
 import com.example.ProjectIUI_HealthBOOT.Services.AudiToTextService.IAudioToTextServices;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,13 +13,8 @@ public class TestController {
     public TestController(IAudioToTextServices audioToTextServices){
         this.audioToTextServices = audioToTextServices;
     }
-    @RequestMapping("/GetText")
-    public AudiToTextResponse GenerateText(){
-        return audioToTextServices.generateTextFromWma("src/main/resources/Records/Test/TestRecord.wav");
-    }
-
-    @GetMapping("/HelloWorld")
-    public String GetText(){
-        return "Hello World";
-    }
+//    @RequestMapping("/GetText")
+//    public AudiToTextResponse GenerateText(){
+//        return audioToTextServices.generateTextFromWma("src/main/resources/Records/Test/TestRecord.wav");
+//    }
 }
