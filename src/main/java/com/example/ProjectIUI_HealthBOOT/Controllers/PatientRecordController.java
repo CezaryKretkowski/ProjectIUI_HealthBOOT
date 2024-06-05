@@ -36,9 +36,7 @@ public class PatientRecordController {
     }
     @GetMapping("/patient/{id}")
     public PatientRecordResponse getPatientRecordByPatientId(@PathVariable UUID id) {
-        List<PatientRecord> patientRecordList=new ArrayList<>();
-        patientRecordList.add(patientRecordService.getPatientRecordByPatientId(id));
-        return new PatientRecordResponse("ok",patientRecordList);
+        return new PatientRecordResponse("ok",patientRecordService.getPatientRecordByPatientId(id));
     }
 
     //@PostMapping("/add")

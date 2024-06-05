@@ -74,7 +74,8 @@ public class PatientRecordService {
         return patientRecordRepository.save(record);
     }
 
-    public PatientRecord getPatientRecordByPatientId(UUID patient_id) {
-        return patientRecordRepository.findByPatientId(patient_id).orElse(null);
+    public List<PatientRecord> getPatientRecordByPatientId(UUID patient_id) {
+        return patientRecordRepository.findPatientRecordsByPatient_Uuid(patient_id);
+
     }
 }
