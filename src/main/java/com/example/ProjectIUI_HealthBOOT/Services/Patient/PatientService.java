@@ -2,10 +2,9 @@ package com.example.ProjectIUI_HealthBOOT.Services.Patient;
 
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.Patient;
 import com.example.ProjectIUI_HealthBOOT.Entity.Patient.PatientRepository;
-import org.apache.coyote.BadRequestException;
+import com.example.ProjectIUI_HealthBOOT.Entity.PatientRecord.PatientRecordRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.HttpClientErrorException;
 
 import java.util.List;
 import java.util.UUID;
@@ -14,10 +13,12 @@ import java.util.UUID;
 public class PatientService {
 
     private final PatientRepository patientRepository;
+    private final PatientRecordRepository patientRecordRepository;
 
     @Autowired
-    public PatientService(PatientRepository patientRepository) {
+    public PatientService(PatientRepository patientRepository, PatientRecordRepository patientRecordRepository) {
         this.patientRepository = patientRepository;
+        this.patientRecordRepository = patientRecordRepository;
     }
 
     public List<Patient> getAllPatients() {
@@ -45,6 +46,8 @@ public class PatientService {
     }
 
     public void deletePatient(UUID id) {
+        var patientRecords = patientRecordRepository.findPatientRecordsByPatient_Uuid(id);
+        patientRecords.forEach(patientRecordRepository::delete);
         patientRepository.deleteById(id);
     }
 }
