@@ -38,7 +38,7 @@ public class PatientController {
         return new PatientResponse("ok",patientList);
     }
 
-    @GetMapping("/{pesel}")
+    @GetMapping("/byPesel/{pesel}")
     public PatientResponse getPatientByPesel(@PathVariable String pesel) {
         Patient patient = patientService.getPatientByPesel(pesel);
         return new PatientResponse("ok", (List<Patient>) patient);
