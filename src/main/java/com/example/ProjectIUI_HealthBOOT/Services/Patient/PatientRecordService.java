@@ -50,19 +50,27 @@ public class PatientRecordService {
     public PatientRecord AddPatientRecord(PatientRecordRequest request) {
         PatientRecord  record = new PatientRecord();
         record.setUuid(UUID.randomUUID());
+        System.out.println(request.getPatientId()+" "+request.getFirstName());
         if(request.getPatientId()!=null){
             Optional<Patient> patient = patientRepository.findById(request.getPatientId());
             if(patient.isPresent()) {
                 record.setPatient(patient.get());
             }else{
+
                 Patient p = new Patient(request.getFirstName(),request.getLastName(),request.getPesel());
                 p = patientRepository.save(p);
                 record.setPatient(p);
             }
         }else {
-            Patient p = new Patient(request.getFirstName(),request.getLastName(),request.getPesel());
-            p = patientRepository.save(p);
-            record.setPatient(p);
+            Optional<Patient> patient = patientRepository.findByPesel(request.getPesel());
+            if(patient.isPresent()) {
+                record.setPatient(patient.get());
+            }else{
+
+                Patient p = new Patient(request.getFirstName(),request.getLastName(),request.getPesel());
+                p = patientRepository.save(p);
+                record.setPatient(p);
+            }
         }
 
 
